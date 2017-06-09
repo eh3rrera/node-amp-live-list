@@ -1,0 +1,119 @@
+<!doctype html>
+<html amp lang="en">
+  <head>
+    <meta charset="utf-8">
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+    <title>AMP Live Video Blog</title>
+    <link rel="canonical" href="http://localhost:3000/" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+
+    <script async custom-element="amp-youtube" src="https://cdn.ampproject.org/v0/amp-youtube-0.1.js"></script>
+    <script async custom-element="amp-live-list" src="https://cdn.ampproject.org/v0/amp-live-list-0.1.js"></script>
+
+    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+
+    <style amp-custom>
+      body {
+        font-family: 'Roboto', sans-serif;
+        background: #EDEDED;
+      }
+      .header {
+        color: #fff;
+        padding: 20px  20px;
+        top: 0px;
+        width: 100%;
+        background: #E53935;
+        text-align:center;
+      }
+      #amp-live-list-videos {
+        margin-bottom: 50px;
+      }
+      #live-list-update-button {
+        color: #E53935;
+        border: 1px solid #E53935;
+        padding: .7em .8em;
+        cursor: pointer;
+        background-color: #fff;
+        text-transform: uppercase;
+        letter-spacing: .2em;
+      }
+      .post {
+        margin-top: 20px;
+      }
+      #live-list-update-button {
+        position: fixed;
+        top: 10px;
+        right: 16px;
+      }
+      .pagination {
+        display: inline-block;
+        padding: 0;
+      }
+      amp-live-list [pagination] nav {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .pagination li {
+        display: inline;
+        padding: 10px;
+        list-style-type: none;
+        color: #000;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>AMP Live Video Blog</h1>
+    </div>
+
+    <amp-live-list 
+        id="amp-live-list-videos"
+        data-poll-interval="10000"
+        data-max-items-per-page="<%= pageSize %>"
+        <% if (currentPage > 1) { %>  disabled  <% } %>
+    >
+
+    <button id ="live-list-update-button" update on="tap:amp-live-list-videos.update" >You have updates</button>
+
+    <div items>
+
+      <% posts.forEach((post) => { %>
+
+      <div class="post" id="<%= post.id %>" data-sort-time="<%= post.timestamp %>">
+        <amp-youtube
+          width="480"
+          height="270"
+          layout="responsive"
+          data-videoid="<%= post.videoID %>"
+        />
+      </div>
+
+      <% }) %>
+    </div>
+
+    <div pagination>
+      <nav aria-label="amp live list pagination">
+
+        <% if (pageCount > 1) { %>
+        <ul class="pagination">
+          
+          <% for (var i = 1; i <= pageCount; i++) { %>
+            <% if (currentPage == i) { %>
+              <li><%= i %></li>
+            <% } else { %>
+              <li><a href="/?page=<%= i %>"><%= i %></a></li>
+            <% } %>
+          <% } %>
+        
+        </ul>
+        <% } %>  
+      </nav>
+    </div>
+
+  </amp-live-list>
+  
+  </body>
+</html>
