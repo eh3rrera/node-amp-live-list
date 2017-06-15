@@ -2,6 +2,8 @@
 
 A sample app to show how the [amp-live-list](https://www.ampproject.org/docs/reference/components/amp-live-list) works (by showing a feed of YouTube videos) with the help of a Node.js/Express backend.
 
+Follow the tutorial at https://blog.pusher.com/building-a-realtime-feed-with-node-js-and-amp/
+
 # Requirements
 
 - [Node.js](https://nodejs.org/en/).
